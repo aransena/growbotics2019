@@ -1,13 +1,13 @@
-long m1_ticks = 0;
-long m2_ticks = 0;
+//long m1_ticks = 0;
+//long m2_ticks = 0;
 String msg;
 void setup() {
   // put your setup code here, to run once:
   encoderSetup();
   Serial.begin(9600);
-  set_encoder_direction(0, 0);
-  set_encoder_direction(1, 0);
-  sensorSetup();
+//  set_encoder_direction(0, 0);
+//  set_encoder_direction(1, 0);
+//  sensorSetup();
   motorSetup();
 }
 
@@ -20,45 +20,42 @@ void loop() {
   // put your main code here, to run repeatedly:
   //  if(topState != 1){
   if (getUltrasonic() >= 15) {
-    m1_ticks = get_motor1_ticks();
-    m2_ticks = get_motor2_ticks();
-    //    rightState = getSensorState(0, 800);
-    //    frontState = getSensorState(1, 800);
-    //    leftState = getSensorState(2, 800);
-    //    topState = getSensorState(3, 600);
+//    m1_ticks = get_motor1_ticks();
+//    m2_ticks = get_motor2_ticks();
 
     rightState = getSensor(0);
     frontState = getSensor(1);
     leftState = getSensor(2);
     topState = getSensor(3);
-
-    int readings[4] = {rightState, frontState, leftState, topState};
-    int k = 0;
-    int max_val = readings[k];
-
-    for (int i = 0; i < 4; ++i)
-    {
-      if (readings[i] > max_val)
+    if(topState <= 600){
+      int readings[4] = {rightState, frontState, leftState, topState};
+      int k = 0;
+      int max_val = readings[k];
+  
+      for (int i = 0; i < 4; ++i)
       {
-        max_val = (int)readings[i];
-        k = i;
+        if (readings[i] > max_val)
+        {
+          max_val = (int)readings[i];
+          k = i;
+        }
       }
-    }
-
-    if (k == 0) {
-      forward(2, 200);
-    }
-    else if (k == 1) {
-      forward(0, 200);
-    }
-    else if (k == 2) {
-      forward(1, 200);
-    }
-    else if (k == 3) {
-      stop_motors();
-    }
-    else {
-
+  
+      if (k == 0) {
+        drive(2, 200);
+      }
+      else if (k == 1) {
+        drive(0, 200);
+      }
+      else if (k == 2) {
+        drive(1, 200);
+      }
+      else if (k == 3) {
+        stop_motors();
+      }
+      else {
+  
+      }
     }
 
     //    if(rightState == 1 && frontState){
@@ -102,4 +99,3 @@ void loop() {
     Serial.println("Obstacle detected");
   }
 }
-

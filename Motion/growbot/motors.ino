@@ -54,7 +54,7 @@ void backward(int side, int speed){
   }
 }
 
-void forward(int side, int speed){
+void drive(int side, int speed){
   if(side == 1){
     analogWrite(EnA, speed);
     digitalWrite(In1, HIGH);
